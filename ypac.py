@@ -35,7 +35,7 @@ def get_string(question, required=False, from_cli=None):
         return from_cli
 
     answer = raw_input("{cli_start}{question} ? {cli_end}".format(
-        cli_start=COLORS_CODES['WHITE'],
+        cli_start=COLORS_CODES['white'],
         question=question,
         cli_end=END_CLI_COLOR
     ))
@@ -49,7 +49,7 @@ def get_boolean(question, from_cli=None):
         return from_cli.lower() in ("yes", "y")
 
     bool = raw_input("{cli_start}{question} [Yes/No] ? {cli_end}".format(
-        cli_start=COLORS_CODES['WHITE'],
+        cli_start=COLORS_CODES['white'],
         question=question,
         cli_end=END_CLI_COLOR
     ))
