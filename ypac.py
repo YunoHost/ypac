@@ -90,7 +90,7 @@ if __name__ == '__main__':
         else:
             error("{directory} is not empty".format(directory=OUTPUT_PATH))
     os.makedirs(OUTPUT_PATH)
-        
+
     # Jinja2 environment
     jinja_env = jinja2.Environment(
                 loader=jinja2.FileSystemLoader(THIS_DIR + '/templates'),
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
     # Render manifest template
     manifest_vars = app
-    manifest_vars['multi_instance'] = "true" if app['multi_instance'] else "false" 
+    manifest_vars['multi_instance'] = "true" if app['multi_instance'] else "false"
     render('manifest.json.j2', 'manifest.json', manifest_vars)
 
 
