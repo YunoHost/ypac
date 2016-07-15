@@ -74,7 +74,7 @@ def render(template, filename, variables):
         temp_file.write(rendered_file)
 
 
-if __name__ == '__main__':
+def main():
 
     # Get app settings
     app['name'] = get_string("Application name", required = True)
@@ -110,3 +110,7 @@ if __name__ == '__main__':
         name=app['name'],
         destination=OUTPUT_PATH
         ))
+
+
+if __name__ == '__main__':
+    main()
