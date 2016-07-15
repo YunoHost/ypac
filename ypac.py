@@ -65,9 +65,9 @@ def color_print(string, color):
 
 
 # Template rendering helper
-def render(template, filename, variables):
+def render(jinja_env, template, filename, variables):
     rendered_file = jinja_env.get_template(template).render(variables)
-    with open(os.path.join(OUTPUT_PATH, filename), 'wb') as temp_file:
+    with open(filename, 'wb') as temp_file:
         temp_file.write(rendered_file)
 
 
@@ -95,13 +95,21 @@ def main():
                 trim_blocks=True)
 
     # Render README template
-    render('README.md.j2', 'README.md', app)
+    render(jinja_env,
+           template='README.md.j2',
+           filename=os.path.join(OUTPUT_PATH, 'README.md'),
+           variables=app
+    )
 
     # Render manifest template
     manifest_vars = app
     manifest_vars['multi_instance'] = "true" if app['multi_instance'] else "false"
-    render('manifest.json.j2', 'manifest.json', manifest_vars)
 
+    render(jinja_env,
+           template='manifest.json.j2',
+           filename=os.path.join(OUTPUT_PATH, 'manifest.json'),
+           variables=manifest_vars
+    )
 
     # Final message
     success("Package for {name} created in {destination}".format(
