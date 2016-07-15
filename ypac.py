@@ -5,6 +5,7 @@ import os
 import sys
 import shutil
 
+import argh
 import jinja2
 
 # CLI Helpers
@@ -79,7 +80,7 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main():
+def main(name=None, id=None, description=None, multi_instance=False, force=False):
     app = dict()
 
     # Get app settings
@@ -128,4 +129,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    argh.dispatch_command(main)
