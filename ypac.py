@@ -85,7 +85,7 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main(name, id=None, description=None, multi_instance=False, force=False):
+def main(name, id=None, description=None, multi_instance=None, force=None):
     app = dict()
 
     # Get app settings
