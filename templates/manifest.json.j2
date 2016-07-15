@@ -1,0 +1,25 @@
+{
+    "name": "{{ name }}",
+    "id": "{{ id }}",
+    "packaging_format": {{ packaging_format }},
+    "requirements": {
+        "yunohost": ">> 2.4.0"
+    },
+    "description": {
+        "en": "{{ description }}"
+    },
+    "url": "{{ app_url }}",
+    "maintainer": {
+        "name": "{{ maintainer_name }}",
+        "email": "{{ maintainer_email }}"
+    },
+    "multi_instance": "{{ multi_instance }}",
+    "services": [
+        {{ services }}
+    ],
+    "arguments": {
+        "install" : [
+            {{ arguments_install }}
+        ]
+    }
+}
