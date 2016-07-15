@@ -25,9 +25,6 @@ COLORS_CODES = {
 # Capture our current directory
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Main variable
-app = dict()
-
 # Prompt helpers
 def get_string(question, required = False):
     answer = raw_input("{cli_start}{question} ? {cli_end}".format(
@@ -75,6 +72,7 @@ def render(template, filename, variables):
 
 
 def main():
+    app = dict()
 
     # Get app settings
     app['name'] = get_string("Application name", required = True)
