@@ -96,13 +96,14 @@ def main(name, id=None, description=None, multi_instance=False, force=False):
     app['multi_instance'] = get_boolean("Multi-instance")
 
     # Reset output directory
-    OUTPUT_PATH = os.path.join(THIS_DIR, '/output/', app['id'])
+    OUTPUT_PATH = os.path.join(THIS_DIR, 'output', app['id'])
 
     if os.path.exists(OUTPUT_PATH):
         if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
             shutil.rmtree(OUTPUT_PATH)
         else:
             error("{directory} is not empty".format(directory=OUTPUT_PATH))
+
     os.makedirs(OUTPUT_PATH)
 
     # Jinja2 environment
