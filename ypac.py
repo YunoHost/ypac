@@ -89,7 +89,7 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main(name, id=None, description=None, multi_instance=None, force=None):
+def main(name, id=None, description=None, multi_instance=None, force=None, output_path=None):
     app = dict()
 
     # Get app settings
@@ -100,7 +100,7 @@ def main(name, id=None, description=None, multi_instance=None, force=None):
     app['multi_instance'] = get_boolean("Multi-instance")
 
     # Reset output directory
-    OUTPUT_PATH = os.path.join(THIS_DIR, 'output', app['id'])
+    OUTPUT_PATH = os.path.join(THIS_DIR, 'output', app['id']) if output_path is None else output_path
 
     if os.path.exists(OUTPUT_PATH):
         if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
