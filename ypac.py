@@ -48,6 +48,9 @@ def get_boolean(question):
     return bool.lower() in ("yes", "y")
 
 # Message helper
+def success(message):
+    color_print(message, 'green')
+
 def warning(message):
     color_print(message, 'yellow')
 
@@ -100,3 +103,10 @@ if __name__ == '__main__':
     manifest_vars = app
     manifest_vars['multi_instance'] = "true" if app['multi_instance'] else "false" 
     render('manifest.json.j2', 'manifest.json', manifest_vars)
+
+
+    # Final message
+    success("Package for {name} created in {destination}".format(
+        name=app['name'],
+        destination=OUTPUT_PATH
+        ))
