@@ -42,6 +42,10 @@ def get_string(question, required=False, from_cli=None, default=None):
     ))
     if required and not answer:
         error("{question} is required".format(question=question))
+
+    if not answer and default:
+        return default
+
     return answer
 
 
