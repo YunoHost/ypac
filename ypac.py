@@ -8,6 +8,7 @@ import shutil
 import argh
 import jinja2
 
+
 # CLI Helpers
 CLI_COLOR_TEMPLATE = '\033[{:d}m\033[1m'
 END_CLI_COLOR = '\033[m'
@@ -29,7 +30,10 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 # Prompt helpers
 
 
-def get_string(question, required=False):
+def get_string(question, required=False, from_cli=None):
+    if from_cli is not None:
+        return from_cli
+
     answer = raw_input("{cli_start}{question} ? {cli_end}".format(
         cli_start=COLORS_CODES['WHITE'],
         question=question,
@@ -40,7 +44,10 @@ def get_string(question, required=False):
     return answer
 
 
-def get_boolean(question):
+def get_boolean(question, from_cli=None):
+    if from_cli in {"yes", "no"}:
+        return from_cli.lower() in ("yes", "y")
+
     bool = raw_input("{cli_start}{question} [Yes/No] ? {cli_end}".format(
         cli_start=COLORS_CODES['WHITE'],
         question=question,
@@ -80,20 +87,20 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main(name, id=None, description=None, multi_instance=False, force=False):
+def main(name, id=None, description=None, multi_instance=None, force=None):
     app = dict()
 
     # Get app settings
     app['name'] = name
-    app['id'] = get_string("Application ID (only alpha-numeric character)").lower()
-    app['description'] = get_string("Description")
-    app['multi_instance'] = get_boolean("Multi-instance")
+    app['id'] = get_string("Application ID (only alpha-numeric character)", from_cli=id).lower()
+    app['description'] = get_string("Description", from_cli=description)
+    app['multi_instance'] = get_boolean("Multi-instance", from_cli=multi_instance)
 
     # Reset output directory
     OUTPUT_PATH = os.path.join(THIS_DIR, '/output/', app['id'])
 
     if os.path.exists(OUTPUT_PATH):
-        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
+        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH), from_cli=force):
             shutil.rmtree(OUTPUT_PATH)
         else:
             error("{directory} is not empty".format(directory=OUTPUT_PATH))
