@@ -1,6 +1,6 @@
 # YPaC
 
-YunoHost application package generator.
+YPaC is **Y**unohost **Pa**ckage **C**reator.
 
 ## Dependencies
 
