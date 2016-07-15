@@ -11,11 +11,7 @@ setup(name='ypac',
       author_email='opi@zeropi.net',
       url='https://github.com/opi/ypac',
       install_requires=open("requirements.txt", "r").read().split(),
-      entry_points={
-        'console_scripts': [
-            'ypac = ypac.main'
-        ],
-      },
+      scripts=['ypac'],
       license= '',
       keywords='yunohost',
      )
