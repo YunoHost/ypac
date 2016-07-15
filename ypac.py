@@ -30,13 +30,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 # Prompt helpers
 
 
-def get_string(question, required=False, from_cli=None):
+def get_string(question, required=False, from_cli=None, default=None):
     if from_cli is not None:
         return from_cli
 
-    answer = raw_input("{cli_start}{question} ? {cli_end}".format(
+    answer = raw_input("{cli_start}{question} ? {default}{cli_end}".format(
         cli_start=COLORS_CODES['white'],
         question=question,
+        default="(default: {}) ".format(default) if default is not None else "",
         cli_end=END_CLI_COLOR
     ))
     if required and not answer:
@@ -89,7 +90,8 @@ def main(name, id=None, description=None, multi_instance=False, force=False):
 
     # Get app settings
     app['name'] = name
-    app['id'] = get_string("Application ID (only alpha-numeric character)", from_cli=id).lower()
+    default_id = name.lower().replace(" ", "_")
+    app['id'] = get_string("Application ID (only alpha-numeric character)", from_cli=id, default=default_id).lower()
     app['description'] = get_string("Description", from_cli=description)
     app['multi_instance'] = get_boolean("Multi-instance")
 
