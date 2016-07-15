@@ -11,7 +11,7 @@ import jinja2
 CLI_COLOR_TEMPLATE = '\033[{:d}m\033[1m'
 END_CLI_COLOR = '\033[m'
 
-colors_codes = {
+COLORS_CODES = {
     'red'   : CLI_COLOR_TEMPLATE.format(31),
     'green' : CLI_COLOR_TEMPLATE.format(32),
     'yellow': CLI_COLOR_TEMPLATE.format(33),
@@ -31,7 +31,7 @@ app = dict()
 # Prompt helpers
 def get_string(question, required = False):
     answer = raw_input("{cli_start}{question} ? {cli_end}".format(
-                cli_start=colors_codes['white'],
+                cli_start=COLORS_CODES['WHITE'],
                 question=question,
                 cli_end=END_CLI_COLOR
             ))
@@ -41,7 +41,7 @@ def get_string(question, required = False):
 
 def get_boolean(question):
     bool = raw_input("{cli_start}{question} [Yes/No] ? {cli_end}".format(
-                cli_start=colors_codes['white'],
+                cli_start=COLORS_CODES['WHITE'],
                 question=question,
                 cli_end=END_CLI_COLOR
             ))
@@ -61,7 +61,7 @@ def error(message, exit = True):
 
 def color_print(string, color):
     print("{cli_start}{string}{cli_end}".format(
-            cli_start=colors_codes[color],
+            cli_start=COLORS_CODES[color],
             string=string,
             cli_end=END_CLI_COLOR
         ))
