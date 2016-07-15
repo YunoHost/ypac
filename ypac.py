@@ -80,11 +80,11 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main(name=None, id=None, description=None, multi_instance=False, force=False):
+def main(name, id=None, description=None, multi_instance=False, force=False):
     app = dict()
 
     # Get app settings
-    app['name'] = get_string("Application name", required=True)
+    app['name'] = name
     app['id'] = get_string("Application ID (only alpha-numeric character)").lower()
     app['description'] = get_string("Description")
     app['multi_instance'] = get_boolean("Multi-instance")
