@@ -81,7 +81,8 @@ def main():
     app['multi_instance'] = get_boolean("Multi-instance")
 
     # Reset output directory
-    OUTPUT_PATH = THIS_DIR + '/output/' + app['id']
+    OUTPUT_PATH = os.path.join(THIS_DIR, '/output/', app['id'])
+
     if os.path.exists(OUTPUT_PATH):
         if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
             shutil.rmtree(OUTPUT_PATH)
