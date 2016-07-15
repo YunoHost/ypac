@@ -44,10 +44,7 @@ def get_string(question, required=False, from_cli=None):
     return answer
 
 
-def get_boolean(question, from_cli=None):
-    if from_cli in {"yes", "no"}:
-        return from_cli.lower() in ("yes", "y")
-
+def get_boolean(question):
     bool = raw_input("{cli_start}{question} [Yes/No] ? {cli_end}".format(
         cli_start=COLORS_CODES['white'],
         question=question,
@@ -87,20 +84,20 @@ def render(jinja_env, template, filename, variables):
         temp_file.write(rendered_file)
 
 
-def main(name, id=None, description=None, multi_instance=None, force=None):
+def main(name, id=None, description=None, multi_instance=False, force=False):
     app = dict()
 
     # Get app settings
     app['name'] = name
     app['id'] = get_string("Application ID (only alpha-numeric character)", from_cli=id).lower()
     app['description'] = get_string("Description", from_cli=description)
-    app['multi_instance'] = get_boolean("Multi-instance", from_cli=multi_instance)
+    app['multi_instance'] = get_boolean("Multi-instance")
 
     # Reset output directory
     OUTPUT_PATH = os.path.join(THIS_DIR, '/output/', app['id'])
 
     if os.path.exists(OUTPUT_PATH):
-        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH), from_cli=force):
+        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
             shutil.rmtree(OUTPUT_PATH)
         else:
             error("{directory} is not empty".format(directory=OUTPUT_PATH))
