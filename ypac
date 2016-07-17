@@ -112,7 +112,7 @@ def main(name, id=None, description=None, multi_instance=None, force=None, outpu
 
     # Jinja2 environment
     jinja_env = jinja2.Environment(
-        loader=jinja2.FileSystemLoader(os.path.join(THIS_DIR + 'templates')),
+        loader=jinja2.FileSystemLoader(os.path.join(THIS_DIR, 'templates')),
         trim_blocks=True)
 
     # Render README template
