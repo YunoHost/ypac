@@ -49,13 +49,26 @@ def get_string(question, required=False, from_cli=None, default=None):
     return answer
 
 
-def get_boolean(question):
-    bool = raw_input("{cli_start}{question} [Yes/No] ? {cli_end}".format(
+def get_boolean(question, default=None):
+    # default could be a string or a boolean
+    if isinstance(default, (int, bool)):
+        default = "Yes" if default else "No"
+    elif isinstance(default, str):
+        default is "Yes" if default.lower() in ("yes", "y") else "No"
+    else:
+        default = None
+
+    answer = raw_input("{cli_start}{question} [Yes/No] ? {default}{cli_end}".format(
         cli_start=COLORS_CODES['white'],
         question=question,
+        default="(default: {}) ".format(default) if default is not None else "",
         cli_end=END_CLI_COLOR
     ))
-    return bool.lower() in ("yes", "y")
+
+    if not answer and default:
+        answer = default
+
+    return answer.lower() in ("yes", "y")
 
 # Message helper
 
@@ -97,13 +110,13 @@ def main(name, id=None, description=None, multi_instance=None, force=None, outpu
     default_id = name.lower().replace(" ", "_")
     app['id'] = get_string("Application ID (only alpha-numeric character)", from_cli=id, default=default_id).lower()
     app['description'] = get_string("Description", from_cli=description)
-    app['multi_instance'] = get_boolean("Multi-instance")
+    app['multi_instance'] = get_boolean("Multi-instance", default=False)
 
     # Reset output directory
     OUTPUT_PATH = os.path.join(THIS_DIR, 'output', app['id']) if output_path is None else output_path
 
     if os.path.exists(OUTPUT_PATH):
-        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH)):
+        if get_boolean("Remove existing {directory} folder".format(directory=OUTPUT_PATH), default=False):
             shutil.rmtree(OUTPUT_PATH)
         else:
             error("{directory} is not empty".format(directory=OUTPUT_PATH))
